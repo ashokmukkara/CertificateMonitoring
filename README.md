@@ -1,6 +1,6 @@
-# CertificateMonitoring
+# SSL Certificate Monitoring with Lamda and SNS
 
-###
+<
 import socket
 import ssl, boto3
 import re,sys,os,datetime
@@ -29,7 +29,7 @@ def sns_Alert(dName, eDays, sslStatus):
     print sslStat
     print snsSub
     response = client.publish(
-    TargetArn="SNS topic ARN",
+    TargetArn="arn:aws:sns:us-west-1:372389872378:Certificate-Expiry",
     Message= sslStat,
     Subject= snsSub
     )
@@ -38,7 +38,7 @@ def sns_Alert(dName, eDays, sslStatus):
 #####Main Section
 client = boto3.client('sns')
 def lambda_handler(event, context):
-    f = ['operations.thesfshipyard.tk']
+    f = ['yoururl.com']
     for dName in f:
         print(dName)
         expDate = ssl_valid_time_remaining(dName.strip())
@@ -61,3 +61,9 @@ def lambda_handler(event, context):
             sns_Alert(dName, str(c), 'Warning')
         else:
             print('Everything Fine..')
+
+
+
+
+>    
+    
